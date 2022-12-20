@@ -1,0 +1,41 @@
+import pandas as pd
+from bs4 import BeautifulSoup
+import requests
+from datetime import datetime
+
+#params 
+start_date=datetime(2022,12,12)
+end_date=datetime(2022,12,15)
+
+date_list = pd.date_range(start=start_date, end=end_date)
+
+
+#first request to get the options contracts
+url='https://www2.bmf.com.br/pages/portal/bmfbovespa/lumis/lum-sistema-pregao-enUS.asp'
+page=requests.get(url)
+
+soup=BeautifulSoup(page.text)
+
+
+descriptions=[]
+contract_options=[]
+for i in soup.find_all('option'):
+    description=str(i)[str(i).find('>')+1:str(i).find('</option>')].strip()
+    descriptions.append(description)
+    contract_options.append(description[:description.find(':')].strip())
+
+
+# iterate contracts
+contract=contract_options[contract_options.index('DOL')]
+
+# iterate date
+month=date_list[1].month
+day=date_list[1].day
+year=date_list[1].year
+
+
+#page of a single contract in a single date
+pege_contract=requests.get(url2,params={'Data':f'{month}/{day}/{year}','Mercadoria':f'{contract}'})
+soup_contract=BeautifulSoup(pege_contract.text)
+
+
