@@ -132,9 +132,3 @@ contracts=['AUD','ARS']
 
 scraper(start_date,end_date,contracts)
 
-
-#page of a single contract in a single date
-pege_contract=requests.get(url2,params={'Data':f'{month}/{day}/{year}','Mercadoria':f'{contract}'})
-soup_contract=BeautifulSoup(pege_contract.text)
-
-
