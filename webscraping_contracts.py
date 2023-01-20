@@ -132,5 +132,4 @@ contracts=['AUD','ARS']
 
 scraper(start_date,end_date,contracts)
 
-print("so um teste")
 
